@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge sort</title>
+</head>
+<body>
+    <script>
+        /* writting the merging function */
+        // Write a function that mergers two sorted arrays into one sorted array and returns the sorted array
+
+        function merge(arr1, arr2){
+            let result = [],
+                i = 0,
+                j = 0;
+
+            while (i < arr1.length && j < arr2.length) {
+                if (arr1[i] < arr2[j]) {
+                    result.push(arr1[i]);
+                    i++;
+                }else{
+                    result.push(arr2[j]);
+                    j++;
+                }
+            }
+
+            while (i < arr1.length) {
+                result.push(arr1[i]);
+                i++
+            }
+            while (j < arr2.length) {
+                result.push(arr2[j]);
+                j++
+            }
+            return result;
+        }
+
+        /* WRITTING THE DIVIDING FUNCTION..: RECURSIVE FUNCTON */
+
+        function mergeSort(arr){
+            if (arr.length <= 1) return arr;
+
+            let middle = Math.floor((arr.length) / 2);
+
+            let slice1 = mergeSort(arr.slice(0, middle)),
+                slice2 = mergeSort(arr.slice(middle));
+
+            return merge(slice1, slice2);
+
+            
+        }
+
+        console.log(mergeSort([1,5,9,8,40,25,15,87,23]));
+        console.log(mergeSort([]));
+    </script>
+</body>
+</html>

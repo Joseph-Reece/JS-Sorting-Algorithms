@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radix sort</title>
+</head>
+<body>
+    <script>
+        function getDigit(num, i){
+            return Math.floor(Math.abs(num) / Math.pow(10, i) % 10);
+            /**
+            Math.floor === eliminates digits after the decimal (rounds down a float number)
+            
+            Math.abs === enable working with -ve numbers
+            
+            Math.pow() === take two arguments 1. the base number and the number to be raised to
+            
+            %10 === finds the number in the said position*/
+        }
+
+        function digitCount(num){
+            if(num === 0) return 1;
+
+            return Math.floor(Math.log10(Math.abs(num)) + 1);
+        }
+
+        function mostDigits(nums){
+            let maxDigits = 0;
+
+            for (let i = 0; i < nums.length; i++) {
+                maxDigits = Math.max(maxDigits, digitCount(nums[i]));
+            }
+            console.log(maxDigits);
+            return maxDigits;
+
+            /* Math.max returns the largest number in a given list of numbers */
+        }
+
+        function radixSort(nums){
+            let maxDigitCount = mostDigits(nums);
+
+            for (let i = 0; i < maxDigitCount; i++) {
+                // console.log(nums[i]);
+                let dB = Array.from({length: 10}, () => []);
+
+                for (let j = 0; j < nums.length; j++) {
+                    let digs = getDigit(nums[j], i);
+
+                    dB[digs].push(nums[j]);
+                }
+
+                nums = [].concat(...dB);
+                // console.log(dB);
+            }
+            return nums;
+
+        }
+
+        console.log(radixSort([0,2,34,65,78895,67, 111, 3456,34,123,45,79,543,786,58]));
+    </script>
+</body>
+</html>
